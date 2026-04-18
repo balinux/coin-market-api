@@ -12,7 +12,7 @@ func main() {
 
 func InitiateRouter() {
 	router := gin.Default()
-	api := router.Group("api")
+	api := router.Group("/api/v1")
 
 	markets.Initiate(api)
 

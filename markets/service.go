@@ -2,6 +2,7 @@ package markets
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -10,6 +11,7 @@ import (
 
 type Service interface {
 	GetAllMarkets() (response []MarketsResponse, err error)
+	GetCoinDetail(id string) (response CoinDetailResponse, err error)
 }
 
 type service struct {
@@ -44,4 +46,31 @@ func (s *service) GetAllMarkets() (response []MarketsResponse, err error) {
 	}
 
 	return
+}
+
+func (s *service) GetCoinDetail(id string) (response CoinDetailResponse, err error) {
+	url := "https://api.coingecko.com/api/v3/coins/" + id
+	byteResponse, err := client.DoRequest(s.client, url)
+	if err != nil {
+		return CoinDetailResponse{}, err
+	}
+
+	var result CoinDetail
+
+	err = json.Unmarshal(byteResponse, &result)
+	if err != nil {
+		return CoinDetailResponse{}, err
+	}
+
+	price, ok := result.MarketData.CurrentPrice["usd"]
+	if !ok {
+		return CoinDetailResponse{}, fmt.Errorf("usd price not found")
+	}
+	return CoinDetailResponse{
+		Name:         result.Name,
+		Image:        result.Image.Large,
+		CurrentPrice: price,
+		Description:  result.Description.EN,
+		Categories:   result.Categories,
+	}, nil
 }
