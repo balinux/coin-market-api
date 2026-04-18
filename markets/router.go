@@ -13,7 +13,7 @@ func Initiate(router *gin.RouterGroup) {
 }
 
 func GetAllMarkets(c *gin.Context, service Service) {
-	data, err := service.GetAllMarkets()()
+	data, err := service.GetAllMarkets()
 	if err != nil {
 		// handler error
 	}
