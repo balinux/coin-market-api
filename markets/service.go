@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"go-mrt-schedule/common/client"
+	"coin-market-api/common/client"
 )
 
 type Service interface {

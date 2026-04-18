@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-mrt-schedule/markets"
+	"coin-market-api/markets"
 
 	"github.com/gin-gonic/gin"
 )

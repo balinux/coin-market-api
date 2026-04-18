@@ -3,7 +3,7 @@ package markets
 import (
 	"net/http"
 
-	"go-mrt-schedule/common/response"
+	"coin-market-api/common/response"
 
 	"github.com/gin-gonic/gin"
 )
